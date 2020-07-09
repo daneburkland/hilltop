@@ -1,3 +1,4 @@
+import "../styles.css";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { useApollo } from "../lib/apolloClient";
 

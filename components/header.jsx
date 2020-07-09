@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
-import { useUser } from '../lib/user';
+import { useUser } from "../lib/user";
 
 const Header = () => {
   const { user, loading } = useUser();
@@ -25,6 +25,11 @@ const Header = () => {
               <a>Protected Page</a>
             </Link>
           </li>
+          <li>
+            <Link href="/run-test">
+              <a>New test</a>
+            </Link>
+          </li>
           {!loading &&
             (user ? (
               <>
@@ -32,10 +37,10 @@ const Header = () => {
                   <Link href="/profile">
                     <a>Profile</a>
                   </Link>
-                </li>{' '}
+                </li>{" "}
                 <li>
                   <a href="/profile-ssr">Profile (SSR)</a>
-                </li>{' '}
+                </li>{" "}
                 <li>
                   <a href="/api/logout">Logout</a>
                 </li>
