@@ -37,7 +37,6 @@ const RunTest = () => {
   const [code, setCode] = React.useState(defaultCode);
   const [createTest] = useMutation(CREATE_TEST_MUTATION);
   const { user, loading } = useFetchUser();
-  console.log(code);
 
   const handleCreateTest = () => {
     createTest({

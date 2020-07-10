@@ -4,7 +4,7 @@ import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
-function Editor({ code, setCode }) {
+function Editor({ code, setCode, className }) {
   const monacoRef = useRef(null);
 
   const handleFormat = () => {
@@ -12,7 +12,7 @@ function Editor({ code, setCode }) {
   };
 
   return (
-    <div>
+    <div className={className}>
       <MonacoEditor
         editorWillMount={(monaco) => {
           monaco.languages.registerDocumentFormattingEditProvider(
