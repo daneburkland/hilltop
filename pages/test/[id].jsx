@@ -1,11 +1,10 @@
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "../../components/layout";
 import { useFetchUser } from "../../lib/user";
 import Editor from "../../components/Editor";
-import { parse } from "graphql";
 
 const GET_TEST = gql`
   query test($id: Int!) {
@@ -90,7 +89,7 @@ const Test = () => {
   const { loading: pollingTestRun } = useQuery(GET_TEST_RUN, {
     variables: { id: parseInt(runningTestId) },
     skip: !runningTestId,
-    pollInterval: 5000,
+    pollInterval: 9000,
     notifyOnNetworkStatusChange: true,
     onCompleted: ({ testRun }) => {
       if (!!testRun.result) {

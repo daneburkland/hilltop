@@ -19,7 +19,7 @@ export default function Dashboard() {
       <h1 className="text-4xl font-semibold mb-4">Dashboard</h1>
       {loading
         ? "Loading..."
-        : data.myTests.map((test) => (
+        : data?.myTests.map((test) => (
             <Link key={test.id} href={`/test/${test.id}`}>
               <div className="flex p-8 cursor-pointer hover:bg-gray-200">
                 <div className="w-1/2">{test.title}</div>
