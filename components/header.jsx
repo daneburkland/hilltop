@@ -7,8 +7,8 @@ const Header = () => {
   const { user, loading } = useUser();
 
   return (
-    <header>
-      <nav>
+    <header className="mb-8">
+      <nav className="container mx-auto py-6">
         <ul>
           <li>
             <Link href="/">
@@ -61,10 +61,7 @@ const Header = () => {
           color: #fff;
           background-color: #333;
         }
-        nav {
-          max-width: 42rem;
-          margin: 1.5rem auto;
-        }
+
         ul {
           display: flex;
           list-style: none;

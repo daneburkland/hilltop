@@ -5,6 +5,7 @@ import { useState } from "react";
 import Layout from "../../components/layout";
 import { useFetchUser } from "../../lib/user";
 import Editor from "../../components/Editor";
+import classnames from "classnames";
 
 const GET_TEST = gql`
   query test($id: Int!) {
@@ -18,7 +19,12 @@ const GET_TEST = gql`
         id
         result
         createdAt
-        logs
+        logs {
+          level
+          time
+          msg
+          stack
+        }
       }
     }
   }
@@ -30,7 +36,12 @@ const GET_TEST_RUN = gql`
       id
       result
       createdAt
-      logs
+      logs {
+        level
+        time
+        msg
+        stack
+      }
     }
   }
 `;
@@ -51,6 +62,15 @@ const UPDATE_TEST_MUTATION = gql`
     }
   }
 `;
+
+function Level({ level }) {
+  switch (level) {
+    case 50:
+      return <span className="text-red-400">Error</span>;
+    default:
+      return <span>Info</span>;
+  }
+}
 
 const Test = () => {
   const router = useRouter();
@@ -118,15 +138,39 @@ const Test = () => {
             Run now
           </button>
 
-          <h2 className="text-2xl font-semibold mb-4">Latest run</h2>
+          <h2 className="text-xl font-semibold mb-4">Latest run</h2>
           {!!runningTestId || updatingTest ? (
             "Running test..."
           ) : (
             <>
-              <h4 className="text-large font-semibold">Result</h4>
-              <div>{latestTestRun?.result}</div>
-              <h4 className="text-large font-semibold">logs</h4>
-              <div>{latestTestRun?.logs}</div>
+              <div className="mb-4">
+                <h4 className="text-xl font-semibold">Result</h4>
+                <pre className="bg-gray-800 text-white overflow-scroll p-2">
+                  <div>{latestTestRun?.result}</div>
+                </pre>
+              </div>
+              <h4 className="text-xl font-semibold">Logs</h4>
+              <pre
+                className="bg-gray-800 overflow-scroll p-2"
+                style={{ maxHeight: 400 }}
+              >
+                {latestTestRun?.logs.map((log) => (
+                  <div className="text-white">
+                    <Level level={log.level} />
+                    {` ${log.time}: `}
+                    <span
+                      className={classnames({
+                        "text-red-400": log.level === 50,
+                      })}
+                    >
+                      {log.msg}
+                    </span>
+                    {log.stack && (
+                      <div className="text-red-400">{log.stack}</div>
+                    )}
+                  </div>
+                ))}
+              </pre>
             </>
           )}
         </>

@@ -13,6 +13,14 @@ function Editor({ code, setCode, className }) {
 
   return (
     <div className={className}>
+      <div className="flex justify-end">
+        <button
+          onClick={handleFormat}
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white text-sm py-1 px-3 border border-blue-500 hover:border-transparent rounded mb-1"
+        >
+          prettier
+        </button>
+      </div>
       <MonacoEditor
         editorWillMount={(monaco) => {
           monaco.languages.registerDocumentFormattingEditProvider(
@@ -41,7 +49,6 @@ function Editor({ code, setCode, className }) {
             return "/_next/static/editor.worker.js";
           };
         }}
-        width="800"
         height="600"
         language="javascript"
         theme="vs-dark"
@@ -53,7 +60,6 @@ function Editor({ code, setCode, className }) {
         }}
         onChange={setCode}
       />
-      <button onClick={handleFormat}>format</button>
     </div>
   );
 }
