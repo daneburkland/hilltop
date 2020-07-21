@@ -1,30 +1,33 @@
 import React from "react";
 import Head from "next/head";
-
 import Header from "./header";
-import { UserProvider } from "../lib/user";
+import { useAuth } from "../lib/AuthProvider";
 
-const Layout = ({ user, loading = false, children }) => (
-  <UserProvider value={{ user, loading }}>
-    <Head>
-      <title>Hilltop</title>
-    </Head>
+const Layout = ({ children }) => {
+  const { hasLoadedUser } = useAuth();
+  return (
+    <>
+      <Head>
+        <title>Hilltop</title>
+      </Head>
 
-    <Header />
+      <Header />
 
-    <main>
-      <div className="container mx-auto">{children}</div>
-    </main>
+      <main>
+        <div className="container mx-auto">
+          {hasLoadedUser ? children : "Loading..."}
+        </div>
+      </main>
 
-    <style jsx>{``}</style>
-    <style jsx global>{`
-      body {
-        margin: 0;
-        color: #333;
-        font-family: -apple-system, "Segoe UI";
-      }
-    `}</style>
-  </UserProvider>
-);
+      <style jsx global>{`
+        body {
+          margin: 0;
+          color: #333;
+          font-family: -apple-system, "Segoe UI";
+        }
+      `}</style>
+    </>
+  );
+};
 
 export default Layout;

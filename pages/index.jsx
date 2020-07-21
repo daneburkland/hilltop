@@ -2,17 +2,15 @@ import React from "react";
 
 import Layout from "../components/layout";
 import Dashboard from "../components/dashboard";
-import { useFetchUser } from "../lib/user";
 import { initializeApollo } from "../lib/apolloClient";
+import { useAuth } from "../lib/AuthProvider";
 
 export default function Home() {
-  const { user, loading } = useFetchUser();
+  const { user } = useAuth();
 
   return (
-    <Layout user={user} loading={loading}>
-      {loading && <p>Loading login info...</p>}
-
-      {!loading && !user && (
+    <Layout>
+      {!user && (
         <>
           <p>
             To test the login click in <i>Login</i>

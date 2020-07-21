@@ -1,13 +1,16 @@
 import "../styles.css";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { useApollo } from "../lib/apolloClient";
+import { AuthProvider } from "../lib/AuthProvider";
 
 export default function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </ApolloProvider>
   );
 }

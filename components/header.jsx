@@ -1,10 +1,9 @@
 import React from "react";
 import Link from "next/link";
-
-import { useUser } from "../lib/user";
+import { useAuth } from "../lib/AuthProvider";
 
 const Header = () => {
-  const { user, loading } = useUser();
+  const { user } = useAuth();
 
   return (
     <header className="mb-8">
@@ -30,28 +29,27 @@ const Header = () => {
               <a>New test</a>
             </Link>
           </li>
-          {!loading &&
-            (user ? (
-              <>
-                <li>
-                  <Link href="/profile">
-                    <a>Profile</a>
-                  </Link>
-                </li>{" "}
-                <li>
-                  <a href="/profile-ssr">Profile (SSR)</a>
-                </li>{" "}
-                <li>
-                  <a href="/api/logout">Logout</a>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <a href="/api/login">Login</a>
-                </li>
-              </>
-            ))}
+          {user ? (
+            <>
+              <li>
+                <Link href="/profile">
+                  <a>Profile</a>
+                </Link>
+              </li>{" "}
+              <li>
+                <a href="/profile-ssr">Profile (SSR)</a>
+              </li>{" "}
+              <li>
+                <a href="/api/logout">Logout</a>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <a href="/api/login">Login</a>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
 
