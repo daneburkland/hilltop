@@ -19,6 +19,7 @@ const GET_TEST = gql`
         id
         result
         createdAt
+        screenshotUrls
         logs {
           level
           time
@@ -36,6 +37,7 @@ const GET_TEST_RUN = gql`
       id
       result
       createdAt
+      screenshotUrls
       logs {
         level
         time
@@ -149,28 +151,38 @@ const Test = () => {
                   <div>{latestTestRun?.result}</div>
                 </pre>
               </div>
-              <h4 className="text-xl font-semibold">Logs</h4>
-              <pre
-                className="bg-gray-800 overflow-scroll p-2"
-                style={{ maxHeight: 400 }}
-              >
-                {latestTestRun?.logs.map((log) => (
-                  <div className="text-white">
-                    <Level level={log.level} />
-                    {` ${log.time}: `}
-                    <span
-                      className={classnames({
-                        "text-red-400": log.level === 50,
-                      })}
-                    >
-                      {log.msg}
-                    </span>
-                    {log.stack && (
-                      <div className="text-red-400">{log.stack}</div>
-                    )}
-                  </div>
-                ))}
-              </pre>
+              <div className="mb-4">
+                <h4 className="text-xl font-semibold">Logs</h4>
+                <pre
+                  className="bg-gray-800 overflow-scroll p-2"
+                  style={{ maxHeight: 400 }}
+                >
+                  {latestTestRun?.logs.map((log) => (
+                    <div className="text-white">
+                      <Level level={log.level} />
+                      {` ${log.time}: `}
+                      <span
+                        className={classnames({
+                          "text-red-400": log.level === 50,
+                        })}
+                      >
+                        {log.msg}
+                      </span>
+                      {log.stack && (
+                        <div className="text-red-400">{log.stack}</div>
+                      )}
+                    </div>
+                  ))}
+                </pre>
+              </div>
+              <div className="mb-4">
+                <h4 className="text-xl font-semibold">Logs</h4>
+                <div>
+                  {latestTestRun?.screenshotUrls.map((url) => {
+                    return <img src={url} />;
+                  })}
+                </div>
+              </div>
             </>
           )}
         </>

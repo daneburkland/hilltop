@@ -25,6 +25,11 @@ const Header = () => {
             </Link>
           </li>
           <li>
+            <Link href="/playground">
+              <a>Playground</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/run-test">
               <a>New test</a>
             </Link>
