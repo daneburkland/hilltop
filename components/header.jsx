@@ -6,51 +6,41 @@ const Header = () => {
   const { user } = useAuth();
 
   return (
-    <header className="mb-8">
+    <header className="mb-4 z-10 relative bg-gray-800 text-gray-300">
       <nav className="container mx-auto py-6">
-        <ul>
-          <li>
+        <ul className="flex">
+          <li className="mr-8 text-lg">
             <Link href="/">
-              <a>Home</a>
+              <a>Dashboard</a>
             </Link>
           </li>
-          <li>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/protected-page">
-              <a>Protected Page</a>
-            </Link>
-          </li>
-          <li>
+          <li className="mr-8 text-lg">
             <Link href="/playground">
               <a>Playground</a>
             </Link>
           </li>
-          <li>
+          <li className="mr-8 text-lg">
             <Link href="/run-test">
               <a>New test</a>
             </Link>
           </li>
           {user ? (
             <>
-              <li>
+              <li className="mr-8 text-lg">
                 <Link href="/profile">
                   <a>Profile</a>
                 </Link>
               </li>{" "}
-              <li>
+              <li className="mr-8 text-lg">
                 <a href="/profile-ssr">Profile (SSR)</a>
               </li>{" "}
-              <li>
+              <li className="mr-8 text-lg">
                 <a href="/api/logout">Logout</a>
               </li>
             </>
           ) : (
             <>
-              <li>
+              <li className="mr-8 text-lg">
                 <a href="/api/login">Login</a>
               </li>
             </>
@@ -58,37 +48,7 @@ const Header = () => {
         </ul>
       </nav>
 
-      <style jsx>{`
-        header {
-          padding: 0.2rem;
-          color: #fff;
-          background-color: #333;
-        }
-
-        ul {
-          display: flex;
-          list-style: none;
-          margin-left: 0;
-          padding-left: 0;
-        }
-        li {
-          margin-right: 1rem;
-        }
-        li:nth-child(3) {
-          margin-right: auto;
-        }
-        a {
-          color: #fff;
-          text-decoration: none;
-        }
-        button {
-          font-size: 1rem;
-          color: #fff;
-          cursor: pointer;
-          border: none;
-          background: none;
-        }
-      `}</style>
+      <style jsx>{``}</style>
     </header>
   );
 };

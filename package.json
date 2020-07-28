@@ -17,6 +17,7 @@
     "apollo-client": "2.6.8",
     "apollo-link-http": "1.5.16",
     "classnames": "^2.2.6",
+    "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
     "graphiql": "^1.0.3",
     "graphql": "^14.0.2",

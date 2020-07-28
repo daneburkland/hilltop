@@ -15,6 +15,10 @@ const Layout = ({ children }) => {
 
       <main>
         <div className="container mx-auto">
+          <div
+            className="absolute bg-gray-800 z-0 w-full"
+            style={{ height: 160, top: 0, left: 0, zIndex: -1 }}
+          />
           {hasLoadedUser ? children : "Loading..."}
         </div>
       </main>
