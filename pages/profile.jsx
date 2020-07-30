@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "../components/layout";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import DashboardShell from "../components/shells/dashboard";
 
 const GENERATE_API_KEY = gql`
   mutation generateApiKey {
@@ -20,7 +21,7 @@ const INVITE_TEAMMATE = gql`
   }
 `;
 
-export default function Profile() {
+function Profile() {
   const [newApiKey, setNewApiKey] = useState(null);
   const [email, setEmail] = useState("");
   const [generateApiKey] = useMutation(GENERATE_API_KEY, {
@@ -33,7 +34,7 @@ export default function Profile() {
     variables: { email },
   });
   return (
-    <Layout>
+    <>
       <div className="bg-white max-w-sm rounded overflow-hidden shadow-lg p-8 mb-10">
         <h1 className="text-4xl font-semibold mb-4">Account</h1>
       </div>
@@ -68,6 +69,10 @@ export default function Profile() {
           </button>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
+
+Profile.Shell = DashboardShell;
+
+export default Profile;

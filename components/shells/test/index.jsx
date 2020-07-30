@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { useState } from "react";
-import Layout from "../../layout";
 import Nav from "./nav";
 import Head from "next/head";
 import Header from "../../header";
@@ -131,8 +130,8 @@ const Test = ({ children }) => {
   });
 
   const breadcrumbs = [
-    { label: testData?.test.author.team.name },
-    { label: testData?.test.title },
+    { label: testData?.test.author.team.name, href: "/" },
+    { label: testData?.test.title, href: `/test/${id}` },
   ];
 
   return (

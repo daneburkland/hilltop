@@ -40,9 +40,9 @@ function Breadcrumbs({ breadcrumbs, gravitar }) {
               viewBox="0 0 20 20"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           )}
@@ -51,7 +51,7 @@ function Breadcrumbs({ breadcrumbs, gravitar }) {
               "text-white": i === length - 1,
             })}
           >
-            <Link href="/">
+            <Link href={breadcrumb.href}>
               <a>{breadcrumb.label}</a>
             </Link>
           </li>
@@ -69,11 +69,6 @@ const Header = ({ breadcrumbs, gravitar }) => {
       <nav className="container mx-auto py-4">
         <ul className="flex items-center">
           <Breadcrumbs breadcrumbs={breadcrumbs} gravitar={gravitar} />
-          <li className="mr-8 text-lg">
-            <Link href="/playground">
-              <a>Playground</a>
-            </Link>
-          </li>
           <li className="mr-8 text-lg">
             <Link href="/run-test">
               <a>New test</a>

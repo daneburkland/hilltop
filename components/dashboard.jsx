@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import Link from "next/link";
-import { format, formatDistance, formatRelative, subDays } from "date-fns";
+import { formatRelative } from "date-fns";
 
 const GET_TESTS = gql`
   query myTests {
@@ -44,7 +44,7 @@ function TestRow({ test }) {
 
 function TestsCard({ tests = [] }) {
   return (
-    <div className="bg-white rounded overflow-hidden shadow-lg p-8 mb-10">
+    <>
       <div className="flex items-center justify-between mb-4">
         <input
           className="w-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -58,21 +58,11 @@ function TestsCard({ tests = [] }) {
       {tests.map((test) => (
         <TestRow test={test} />
       ))}
-    </div>
+    </>
   );
 }
 
 export default function Dashboard() {
   const { loading, error, data } = useQuery(GET_TESTS);
-  return (
-    <div>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <div className="flex">
-          <TestsCard tests={data?.myTests} />
-        </div>
-      )}
-    </div>
-  );
+  return <TestsCard tests={data?.myTests} />;
 }

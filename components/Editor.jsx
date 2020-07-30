@@ -2,7 +2,10 @@ import dynamic from "next/dynamic";
 import { useRef } from "react";
 import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";
-const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+const MonacoEditor = dynamic(import("react-monaco-editor"), {
+  ssr: false,
+  loading: () => <div className="w-full bg-black" style={{ height: 600 }} />,
+});
 
 function Editor({ code, setCode, className }) {
   const monacoRef = useRef(null);

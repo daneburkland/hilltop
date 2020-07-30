@@ -4,7 +4,6 @@ import classnames from "classnames";
 
 const Nav = ({ id }) => {
   const router = useRouter();
-  console.log(router);
   return (
     <nav className="text-base text-gray-500 mb-8">
       <ul className="flex">
@@ -19,32 +18,50 @@ const Nav = ({ id }) => {
               })
             }
           >
-            Dashboard
+            Overview
           </a>
         </li>
         <li className="mr-8">
           <a
-            className="cursor-pointer"
+            className={classnames("cursor-pointer", {
+              "text-white": router.pathname === "/test/[id]/history",
+            })}
             onClick={() =>
-              router.push("/test/[id]/runs", `/test/${id}/runs`, {
+              router.push("/test/[id]/history", `/test/${id}/history`, {
                 shallow: true,
               })
             }
           >
-            Runs
+            History
           </a>
         </li>
 
         <li className="mr-8">
           <a
-            className="cursor-pointer"
+            className={classnames("cursor-pointer", {
+              "text-white": router.pathname === "/test/[id]/screenshots",
+            })}
             onClick={() =>
               router.push("/test/[id]/screenshots", `/test/${id}/screenshots`, {
                 shallow: true,
               })
             }
           >
-            Screenshots
+            Files
+          </a>
+        </li>
+        <li className="mr-8">
+          <a
+            className={classnames("cursor-pointer", {
+              "text-white": router.pathname === "/test/[id]/screenshots",
+            })}
+            onClick={() =>
+              router.push("/test/[id]/screenshots", `/test/${id}/screenshots`, {
+                shallow: true,
+              })
+            }
+          >
+            Logs
           </a>
         </li>
       </ul>
