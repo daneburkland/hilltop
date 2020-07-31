@@ -1,6 +1,6 @@
 import Editor from "../../../components/Editor";
 import classnames from "classnames";
-import TestShell, { TestContext } from "../../../components/shells/test";
+import FlowShell, { FlowContext } from "../../../components/shells/flow";
 import { useContext } from "react";
 
 function Level({ level }) {
@@ -12,43 +12,41 @@ function Level({ level }) {
   }
 }
 
-const Test = () => {
+const Flow = () => {
   const {
     code,
     setCode,
-    id,
-    title,
-    latestTestRun,
+    latestFlowRun,
     loading,
-    updateTest,
-    runningTestId,
-    updatingTest,
-  } = useContext(TestContext);
+    updateFlow,
+    runningFlowId,
+    updatingFlow,
+  } = useContext(FlowContext);
 
   return (
     <>
       {loading ? (
-        "Loading test..."
+        "Loading flow..."
       ) : (
         <>
           <Editor code={code} setCode={setCode} className="mb-6" />
 
           <button
             className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mb-10"
-            onClick={updateTest}
+            onClick={updateFlow}
           >
             Run now
           </button>
 
           <h2 className="text-xl font-semibold mb-4">Latest run</h2>
-          {!!runningTestId || updatingTest ? (
-            "Running test..."
+          {!!runningFlowId || updatingFlow ? (
+            "Running flow..."
           ) : (
             <>
               <div className="mb-4">
                 <h4 className="text-xl font-semibold">Result</h4>
                 <pre className="bg-gray-800 text-white overflow-scroll p-2">
-                  <div>{latestTestRun?.result}</div>
+                  <div>{latestFlowRun?.result}</div>
                 </pre>
               </div>
               <div className="mb-4">
@@ -57,7 +55,7 @@ const Test = () => {
                   className="bg-gray-800 overflow-scroll p-2"
                   style={{ maxHeight: 400 }}
                 >
-                  {latestTestRun?.logs.map((log) => (
+                  {latestFlowRun?.logs.map((log) => (
                     <div className="text-white">
                       <Level level={log.level} />
                       {` ${log.time}: `}
@@ -78,7 +76,7 @@ const Test = () => {
               <div className="mb-4">
                 <h4 className="text-xl font-semibold">Logs</h4>
                 <div>
-                  {latestTestRun?.screenshotUrls.map((url) => {
+                  {latestFlowRun?.screenshotUrls.map((url) => {
                     return <img src={url} />;
                   })}
                 </div>
@@ -91,6 +89,6 @@ const Test = () => {
   );
 };
 
-Test.Shell = TestShell;
+Flow.Shell = FlowShell;
 
-export default Test;
+export default Flow;

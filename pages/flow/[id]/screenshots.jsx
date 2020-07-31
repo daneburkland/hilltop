@@ -1,25 +1,25 @@
-import TestShell, { TestContext } from "../../../components/shells/test";
+import FlowShell, { FlowContext } from "../../../components/shells/flow";
 import { useContext } from "react";
 
-const Test = () => {
-  const { latestTestRun, loading, runningTestId, updatingTest } = useContext(
-    TestContext
+const Flow = () => {
+  const { latestFlowRun, loading, runningFlowId, updatingFlow } = useContext(
+    FlowContext
   );
   return (
     <>
       {loading ? (
-        "Loading test..."
+        "Loading flow..."
       ) : (
         <>
           <h2 className="text-xl font-semibold mb-4">Latest run</h2>
-          {!!runningTestId || updatingTest ? (
-            "Running test..."
+          {!!runningFlowId || updatingFlow ? (
+            "Running flow..."
           ) : (
             <>
               <div className="mb-4">
                 <h4 className="text-xl font-semibold">Logs</h4>
                 <div>
-                  {latestTestRun?.screenshotUrls.map((url) => {
+                  {latestFlowRun?.screenshotUrls.map((url) => {
                     return <img src={url} />;
                   })}
                 </div>
@@ -32,6 +32,6 @@ const Test = () => {
   );
 };
 
-Test.Shell = TestShell;
+Flow.Shell = FlowShell;
 
-export default Test;
+export default Flow;

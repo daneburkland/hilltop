@@ -7,9 +7,9 @@ import Head from "next/head";
 import Header from "../../header";
 import { useAuth } from "../../../lib/AuthProvider";
 
-const GET_TEST = gql`
-  query test($id: Int!) {
-    test(id: $id) {
+const GET_FLOW = gql`
+  query flow($id: Int!) {
+    flow(id: $id) {
       id
       title
       code
@@ -36,9 +36,9 @@ const GET_TEST = gql`
   }
 `;
 
-const GET_TEST_RUN = gql`
-  query testRun($id: Int!) {
-    testRun(id: $id) {
+const GET_FLOW_RUN = gql`
+  query flowRun($id: Int!) {
+    flowRun(id: $id) {
       id
       result
       createdAt
@@ -53,14 +53,14 @@ const GET_TEST_RUN = gql`
   }
 `;
 
-const UPDATE_TEST_MUTATION = gql`
-  mutation updatedTest(
+const UPDATE_FLOW_MUTATION = gql`
+  mutation updateFlow(
     $title: String!
     $code: String!
     $run: Boolean!
     $id: Int!
   ) {
-    updateTest(title: $title, code: $code, run: $run, id: $id) {
+    updateFlow(title: $title, code: $code, run: $run, id: $id) {
       id
       title
       runs(last: 1) {
@@ -70,29 +70,29 @@ const UPDATE_TEST_MUTATION = gql`
   }
 `;
 
-export const TestContext = React.createContext({
+export const FlowContext = React.createContext({
   code: "",
   setCode: null,
   id: null,
-  latestTestRun: null,
+  latestFlowRun: null,
   loading: null,
-  updateTest: null,
-  runningTestId: null,
-  setRunningTestId: null,
-  updatingTest: null,
+  updateFlow: null,
+  runningFlowId: null,
+  setRunningFlowId: null,
+  updatingFlow: null,
 });
 
-const Test = ({ children }) => {
+const Flow = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
   const [code, setCode] = useState("");
   const [title, setTitle] = useState("");
-  const [runningTestId, setRunningTestId] = useState(null);
-  const [latestTestRun, setLatestTestRun] = useState(null);
+  const [runningFlowId, setRunningFlowId] = useState(null);
+  const [latestFlowRun, setLatestFlowRun] = useState(null);
   const { hasLoadedUser, user } = useAuth();
 
-  const [updateTest, { loading: updatingTest }] = useMutation(
-    UPDATE_TEST_MUTATION,
+  const [updateFlow, { loading: updatingFlow }] = useMutation(
+    UPDATE_FLOW_MUTATION,
     {
       variables: {
         title,
@@ -100,38 +100,38 @@ const Test = ({ children }) => {
         run: true,
         id: parseInt(id),
       },
-      onCompleted: ({ updateTest }) => {
-        setRunningTestId(updateTest.runs[0].id);
+      onCompleted: ({ updateFlow }) => {
+        setRunningFlowId(updateFlow.runs[0].id);
       },
     }
   );
 
-  const { loading, data: testData } = useQuery(GET_TEST, {
+  const { loading, data: flowData } = useQuery(GET_FLOW, {
     variables: { id: parseInt(id) },
     skip: !id,
     onCompleted: (data) => {
-      setCode(data.test.code);
-      setTitle(data.test.title);
-      setLatestTestRun(data.test.runs[0]);
+      setCode(data.flow.code);
+      setTitle(data.flow.title);
+      setLatestFlowRun(data.flow.runs[0]);
     },
   });
 
-  const { loading: pollingTestRun } = useQuery(GET_TEST_RUN, {
-    variables: { id: parseInt(runningTestId) },
-    skip: !runningTestId,
+  const {} = useQuery(GET_FLOW_RUN, {
+    variables: { id: parseInt(runningFlowId) },
+    skip: !runningFlowId,
     pollInterval: 9000,
     notifyOnNetworkStatusChange: true,
-    onCompleted: ({ testRun }) => {
-      if (!!testRun.result) {
-        setLatestTestRun(testRun);
-        setRunningTestId(null);
+    onCompleted: ({ flowRun }) => {
+      if (!!flowRun.result) {
+        setLatestFlowRun(flowRun);
+        setRunningFlowId(null);
       }
     },
   });
 
   const breadcrumbs = [
-    { label: testData?.test.author.team.name, href: "/" },
-    { label: testData?.test.title, href: `/test/${id}` },
+    { label: flowData?.flow.author.team.name, href: "/" },
+    { label: flowData?.flow.title, href: `/flow/${id}` },
   ];
 
   return (
@@ -146,18 +146,18 @@ const Test = ({ children }) => {
         <div className="bg-white max-w-sm rounded overflow-hidden shadow-lg p-8 mb-10">
           <h1 className="text-4xl font-semibold">{title}</h1>
         </div>
-        <TestContext.Provider
+        <FlowContext.Provider
           value={{
             code,
             setCode,
             id,
             title,
-            updateTest,
-            latestTestRun,
+            updateFlow,
+            latestFlowRun,
             loading,
-            runningTestId,
-            setRunningTestId,
-            updatingTest,
+            runningFlowId,
+            setRunningFlowId,
+            updatingFlow,
           }}
         >
           <main>
@@ -172,10 +172,10 @@ const Test = ({ children }) => {
             />
             {hasLoadedUser ? children : "Loading..."}
           </main>
-        </TestContext.Provider>
+        </FlowContext.Provider>
       </div>
     </>
   );
 };
 
-export default Test;
+export default Flow;

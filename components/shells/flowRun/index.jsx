@@ -7,9 +7,9 @@ import Header from "../../header";
 import { useAuth } from "../../../lib/AuthProvider";
 import { formatRelative } from "date-fns";
 
-const GET_TEST_RUN = gql`
-  query testRun($id: Int!) {
-    testRun(id: $id) {
+const GET_FLOW_RUN = gql`
+  query flowRun($id: Int!) {
+    flowRun(id: $id) {
       id
       result
       createdAt
@@ -20,7 +20,7 @@ const GET_TEST_RUN = gql`
         msg
         stack
       }
-      test {
+      flow {
         code
         title
         author {
@@ -31,29 +31,29 @@ const GET_TEST_RUN = gql`
   }
 `;
 
-export const TestRunContext = React.createContext({
-  testRun: null,
+export const FlowRunContext = React.createContext({
+  flowRun: null,
 });
 
-const TestRunShell = ({ children }) => {
+const FlowRunShell = ({ children }) => {
   const { user, hasLoadedUser } = useAuth();
   const router = useRouter();
-  const { id, testRun } = router.query;
-  const { data } = useQuery(GET_TEST_RUN, {
-    skip: !testRun,
+  const { id, flowRun } = router.query;
+  const { data } = useQuery(GET_FLOW_RUN, {
+    skip: !flowRun,
     variables: {
-      id: parseInt(testRun),
+      id: parseInt(flowRun),
     },
   });
 
   const breadcrumbs = [
-    { label: data?.testRun.test.author.name, href: `/` },
-    { label: data?.testRun.test.title, href: `/test/${id}` },
+    { label: data?.flowRun.flow.author.name, href: `/` },
+    { label: data?.flowRun.flow.title, href: `/flow/${id}` },
     {
       label: data
-        ? formatRelative(new Date(data?.testRun.createdAt), new Date())
+        ? formatRelative(new Date(data?.flowRun.createdAt), new Date())
         : undefined,
-      href: `/test/${id}/history/${testRun}`,
+      href: `/flow/${id}/history/${flowRun}`,
     },
   ];
 
@@ -67,7 +67,7 @@ const TestRunShell = ({ children }) => {
         <hr className=" mb-4 border-gray-500" />
         {/* <Nav /> */}
 
-        <TestRunContext.Provider value={{ testRun: data?.testRun }}>
+        <FlowRunContext.Provider value={{ flowRun: data?.flowRun }}>
           <main>
             <div
               className="absolute bg-gray-800 z-0 w-full"
@@ -84,10 +84,10 @@ const TestRunShell = ({ children }) => {
               </div>
             </div>
           </main>
-        </TestRunContext.Provider>
+        </FlowRunContext.Provider>
       </div>
     </>
   );
 };
 
-export default TestRunShell;
+export default FlowRunShell;

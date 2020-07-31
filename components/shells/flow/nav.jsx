@@ -10,10 +10,10 @@ const Nav = ({ id }) => {
         <li className="mr-8">
           <a
             className={classnames("cursor-pointer", {
-              "text-white": router.pathname === "/test/[id]",
+              "text-white": router.pathname === "/flow/[id]",
             })}
             onClick={() =>
-              router.push("/test/[id]", `/test/${id}`, {
+              router.push("/flow/[id]", `/flow/${id}`, {
                 shallow: true,
               })
             }
@@ -24,10 +24,10 @@ const Nav = ({ id }) => {
         <li className="mr-8">
           <a
             className={classnames("cursor-pointer", {
-              "text-white": router.pathname === "/test/[id]/history",
+              "text-white": router.pathname === "/flow/[id]/history",
             })}
             onClick={() =>
-              router.push("/test/[id]/history", `/test/${id}/history`, {
+              router.push("/flow/[id]/history", `/flow/${id}/history`, {
                 shallow: true,
               })
             }
@@ -39,10 +39,10 @@ const Nav = ({ id }) => {
         <li className="mr-8">
           <a
             className={classnames("cursor-pointer", {
-              "text-white": router.pathname === "/test/[id]/screenshots",
+              "text-white": router.pathname === "/flow/[id]/screenshots",
             })}
             onClick={() =>
-              router.push("/test/[id]/screenshots", `/test/${id}/screenshots`, {
+              router.push("/flow/[id]/screenshots", `/flow/${id}/screenshots`, {
                 shallow: true,
               })
             }
@@ -53,10 +53,10 @@ const Nav = ({ id }) => {
         <li className="mr-8">
           <a
             className={classnames("cursor-pointer", {
-              "text-white": router.pathname === "/test/[id]/screenshots",
+              "text-white": router.pathname === "/flow/[id]/screenshots",
             })}
             onClick={() =>
-              router.push("/test/[id]/screenshots", `/test/${id}/screenshots`, {
+              router.push("/flow/[id]/screenshots", `/flow/${id}/screenshots`, {
                 shallow: true,
               })
             }

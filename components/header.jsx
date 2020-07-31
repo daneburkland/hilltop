@@ -13,7 +13,7 @@ function Gravitar({ gravitar }) {
   );
 }
 
-function Breadcrumbs({ breadcrumbs, gravitar }) {
+function Breadcrumbs({ breadcrumbs = [], gravitar }) {
   const length = breadcrumbs.length;
   if (!length) {
     return (
@@ -21,7 +21,7 @@ function Breadcrumbs({ breadcrumbs, gravitar }) {
         <Gravitar gravitar={gravitar} />
         <li className="mr-8 text-lg flex-grow text-white">
           <Link href="/">
-            <a>{(breadcrumbs && breadcrumbs[0].label) || "Loading..."}</a>
+            <a>{(breadcrumbs[0] && breadcrumbs[0].label) || "Loading..."}</a>
           </Link>
         </li>
       </>
@@ -35,7 +35,7 @@ function Breadcrumbs({ breadcrumbs, gravitar }) {
         <>
           {!!i && (
             <svg
-              class="flex-shrink-0 mx-2 h-5 w-5 text-gray-400"
+              className="flex-shrink-0 mx-2 h-5 w-5 text-gray-400"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -70,8 +70,8 @@ const Header = ({ breadcrumbs, gravitar }) => {
         <ul className="flex items-center">
           <Breadcrumbs breadcrumbs={breadcrumbs} gravitar={gravitar} />
           <li className="mr-8 text-lg">
-            <Link href="/run-test">
-              <a>New test</a>
+            <Link href="/newFlow">
+              <a>New flow</a>
             </Link>
           </li>
           {authedUser ? (

@@ -6,9 +6,9 @@ import Layout from "../components/layout";
 import { useFetchUser } from "../lib/user";
 import Editor from "../components/Editor";
 
-const CREATE_TEST_MUTATION = gql`
-  mutation createTest($title: String!, $code: String!) {
-    createTest(title: $title, code: $code) {
+const CREATE_FLOW_MUTATION = gql`
+  mutation createFlow($title: String!, $code: String!) {
+    createFlow(title: $title, code: $code) {
       id
       title
     }
@@ -33,13 +33,13 @@ module.exports = async function({ page }) {
 }
 `;
 
-const RunTest = () => {
+const RunFlow = () => {
   const [code, setCode] = React.useState(defaultCode);
-  const [createTest] = useMutation(CREATE_TEST_MUTATION);
+  const [createFlow] = useMutation(CREATE_FLOW_MUTATION);
   const { user, loading } = useFetchUser();
 
-  const handleCreateTest = () => {
-    createTest({
+  const handleCreateFlow = () => {
+    createFlow({
       variables: {
         title: "first",
         code,
@@ -49,7 +49,7 @@ const RunTest = () => {
 
   return (
     <Layout user={user} loading={loading}>
-      <h1 className="text-2xl font-semibold mb-4">Create new test</h1>
+      <h1 className="text-2xl font-semibold mb-4">Create new flow</h1>
 
       {loading && <p>Loading profile...</p>}
 
@@ -59,9 +59,9 @@ const RunTest = () => {
         <>
           <button
             className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4"
-            onClick={() => handleCreateTest()}
+            onClick={() => handleCreateFlow()}
           >
-            Create test
+            Create flow
           </button>
         </>
       )}
@@ -69,4 +69,4 @@ const RunTest = () => {
   );
 };
 
-export default RunTest;
+export default RunFlow;
