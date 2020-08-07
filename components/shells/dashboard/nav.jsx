@@ -35,6 +35,15 @@ const Nav = () => {
             <a>Playground</a>
           </Link>
         </li>
+        <li
+          className={classnames("mr-8 cursor-pointer", {
+            "text-white": router.pathname === "/webhooks",
+          })}
+        >
+          <Link href="/webhooks">
+            <a>Webhooks</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

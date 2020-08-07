@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Layout from "../components/layout";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import DashboardShell from "../components/shells/dashboard";
@@ -35,9 +34,7 @@ function Profile() {
   });
   return (
     <>
-      <div className="bg-white max-w-sm rounded overflow-hidden shadow-lg p-8 mb-10">
-        <h1 className="text-4xl font-semibold mb-4">Account</h1>
-      </div>
+      <h1 className="text-4xl font-semibold mb-4">Account</h1>
 
       <div className="mb-4">
         <h2 className="text-2xl font-semibold mb-2">API key</h2>

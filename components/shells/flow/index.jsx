@@ -27,7 +27,6 @@ const GET_FLOW = gql`
         screenshotUrls
         logs {
           level
-          time
           msg
           stack
         }
@@ -45,7 +44,6 @@ const GET_FLOW_RUN = gql`
       screenshotUrls
       logs {
         level
-        time
         msg
         stack
       }
