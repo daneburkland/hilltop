@@ -12,7 +12,7 @@ const LOGIN = gql`
 `;
 
 const callAPI = async (path, body, session, headers) => {
-  const res = await fetch("http://localhost:4000", {
+  const res = await fetch("http://localhost:4000 ", {
     method: "post",
     headers: {
       "content-type": "application/json",
@@ -53,9 +53,8 @@ export default async function callback(req, res) {
           const response = await callAPI("graphql", req.body, session, {
             authorization: `Bearer ${session.accessToken}`,
           });
-          console.log("response", response);
         } catch (e) {
-          console.log(e);
+          console.error(e);
         }
         return session;
       },

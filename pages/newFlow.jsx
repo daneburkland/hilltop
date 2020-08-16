@@ -1,10 +1,9 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-
-import Layout from "../components/layout";
 import { useFetchUser } from "../lib/user";
 import Editor from "../components/Editor";
+import DashboardShell from "../components/shells/dashboard";
 
 const CREATE_FLOW_MUTATION = gql`
   mutation createFlow($title: String!, $code: String!) {
@@ -33,7 +32,7 @@ module.exports = async function({ page }) {
 }
 `;
 
-const RunFlow = () => {
+function RunFlow() {
   const [code, setCode] = React.useState(defaultCode);
   const [createFlow] = useMutation(CREATE_FLOW_MUTATION);
   const { user, loading } = useFetchUser();
@@ -48,7 +47,7 @@ const RunFlow = () => {
   };
 
   return (
-    <Layout user={user} loading={loading}>
+    <>
       <h1 className="text-2xl font-semibold mb-4">Create new flow</h1>
 
       {loading && <p>Loading profile...</p>}
@@ -65,8 +64,10 @@ const RunFlow = () => {
           </button>
         </>
       )}
-    </Layout>
+    </>
   );
-};
+}
+
+RunFlow.Shell = DashboardShell;
 
 export default RunFlow;

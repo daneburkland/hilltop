@@ -44,6 +44,15 @@ const Nav = () => {
             <a>Webhooks</a>
           </Link>
         </li>
+        <li
+          className={classnames("mr-8 cursor-pointer", {
+            "text-white": router.pathname === "/newFlow",
+          })}
+        >
+          <Link href="/newFlow">
+            <a>New flow</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

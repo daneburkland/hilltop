@@ -18,7 +18,9 @@ const GET_USER = gql`
 
 const DashboardShell = ({ children }) => {
   const { user, hasLoadedUser } = useAuth();
-  const { data: userData } = useQuery(GET_USER);
+  const { data: userData } = useQuery(GET_USER, {
+    skip: !hasLoadedUser,
+  });
 
   const breadcrumbs = [{ label: userData?.user.team.name, href: "/" }];
 

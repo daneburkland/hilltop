@@ -1,42 +1,44 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import DashboardShell from "../components/shells/dashboard";
 
 const WEBHOOK_MUTATION = gql`
-  mutation createWebhook(
-    $resource: String!
-    $onCreate: Boolean!
-    $onExecute: Boolean!
-    $url: String!
-  ) {
-    createWebhook(
-      resource: $resource
-      onCreate: $onCreate
-      onExecute: $onExecute
-      url: $url
-    ) {
+  mutation createWebhook($noun: String!, $verb: String!, $url: String!) {
+    createWebhook(noun: $noun, verb: $verb, url: $url) {
       id
     }
   }
 `;
 
+const GET_WEBHOOKS = gql`
+  query webhooks {
+    webhooks {
+      id
+      url
+      event {
+        noun
+        verb
+      }
+    }
+  }
+`;
+
 function Webhooks() {
-  const [resource, setResource] = useState("Flow");
-  const [onCreate, setOnCreate] = useState(false);
-  const [onExecute, setOnExecute] = useState(false);
+  const [noun, setNoun] = useState("Flow");
+  const [verb, setVerb] = useState(false);
   const [url, setUrl] = useState(null);
-  console.log({ resource, onCreate, onExecute, url });
+  const { data } = useQuery(GET_WEBHOOKS);
 
   const [handleAddWebhook] = useMutation(WEBHOOK_MUTATION, {
-    variables: { resource, onCreate, onExecute, url },
+    variables: { noun, verb, url },
   });
   return (
     <>
       <h1 className="text-4xl font-semibold mb-4">Webhooks</h1>
 
       <div className="mb-4">
-        <div className="w-full flex justify-between items-end">
+        <div className="w-full flex justify-between items-end mb-6">
           <div className="flex">
             <div className="mr-4 w-64">
               <label
@@ -49,9 +51,9 @@ function Webhooks() {
                 <select
                   className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="grid-state"
-                  value={resource}
+                  value={noun}
                   onChange={({ target }) => {
-                    setResource(target.value);
+                    setNoun(target.value);
                   }}
                 >
                   <option value="Flow">Flow</option>
@@ -72,23 +74,27 @@ function Webhooks() {
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
-                Events
+                Event
               </label>
               <label className="md:w-2/3 block ">
                 <input
+                  type="radio"
                   className="mr-2 leading-tight"
-                  type="checkbox"
-                  onChange={({ target }) => setOnCreate(target.checked)}
+                  checked={verb === "created"}
+                  value="created"
+                  onChange={({ target }) => setVerb(target.value)}
                 />
                 <span className="text-sm">Created</span>
               </label>
               <label className="md:w-2/3 block ">
                 <input
+                  type="radio"
                   className="mr-2 leading-tight"
-                  type="checkbox"
-                  onChange={({ target }) => setOnExecute(target.checked)}
+                  checked={verb === "executed"}
+                  value="executed"
+                  onChange={({ target }) => setVerb(target.value)}
                 />
-                <span className="text-sm">Execution</span>
+                <span className="text-sm">Executed</span>
               </label>
             </div>
             <div className="w-96">
@@ -110,11 +116,25 @@ function Webhooks() {
           </div>
 
           <button
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4"
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             onClick={handleAddWebhook}
           >
             Add
           </button>
+        </div>
+
+        <div>
+          {data?.webhooks.map((webhook) => (
+            <div key={webhook.id} className="mb-3">
+              <code className="bg-gray-100 text-gray-800 px-1 py-1 mr-2">{`${webhook.event.noun.toLowerCase()}.${
+                webhook.event.verb
+              }`}</code>
+              <span className="mr-2">notifying</span>
+              <code className="mr-2 bg-gray-100 text-gray-800 px-1 py-1">
+                {webhook.url}
+              </code>
+            </div>
+          ))}
         </div>
       </div>
     </>

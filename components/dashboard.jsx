@@ -56,7 +56,7 @@ function FlowsCard({ flows = [] }) {
         </button>
       </div>
       {flows.map((flow) => (
-        <FlowRow flow={flow} />
+        <FlowRow flow={flow} key={flow.id} />
       ))}
     </>
   );

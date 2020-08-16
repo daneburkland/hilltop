@@ -1,6 +1,6 @@
 import auth0 from "../../lib/auth0";
 const callAPI = async (path, body, headers) => {
-  const res = await fetch("http://localhost:4000", {
+  const res = await fetch("http://localhost:4000 ", {
     method: "post",
     headers: {
       "content-type": "application/json",

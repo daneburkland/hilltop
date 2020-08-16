@@ -32,12 +32,13 @@ function Breadcrumbs({ breadcrumbs = [], gravitar }) {
     <div className="flex flex-grow items-center">
       <Gravitar gravitar={gravitar} />
       {breadcrumbs.map((breadcrumb, i) => (
-        <>
+        <React.Fragment key={i}>
           {!!i && (
             <svg
               className="flex-shrink-0 mx-2 h-5 w-5 text-gray-400"
               fill="currentColor"
               viewBox="0 0 20 20"
+              key={i}
             >
               <path
                 fillRule="evenodd"
@@ -55,7 +56,7 @@ function Breadcrumbs({ breadcrumbs = [], gravitar }) {
               <a>{breadcrumb.label}</a>
             </Link>
           </li>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
@@ -69,11 +70,6 @@ const Header = ({ breadcrumbs, gravitar }) => {
       <nav className="container mx-auto py-4">
         <ul className="flex items-center">
           <Breadcrumbs breadcrumbs={breadcrumbs} gravitar={gravitar} />
-          <li className="mr-8 text-lg">
-            <Link href="/newFlow">
-              <a>New flow</a>
-            </Link>
-          </li>
           {authedUser ? (
             <>
               <li className="mr-8 text-lg">
@@ -94,8 +90,6 @@ const Header = ({ breadcrumbs, gravitar }) => {
           )}
         </ul>
       </nav>
-
-      <style jsx>{``}</style>
     </header>
   );
 };
