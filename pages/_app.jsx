@@ -1,4 +1,5 @@
 import "../styles.css";
+import "react-tippy/dist/tippy.css";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { useApollo } from "../lib/apolloClient";
 import { AuthProvider } from "../lib/AuthProvider";

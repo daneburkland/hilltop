@@ -16,12 +16,14 @@ const Flow = () => {
   const {
     code,
     setCode,
-    latestFlowRun,
+    flow,
     loading,
     updateFlow,
     runningFlowId,
     updatingFlow,
   } = useContext(FlowContext);
+
+  const latestFlowRun = flow?.runs[0];
 
   return (
     <>
@@ -32,7 +34,7 @@ const Flow = () => {
           <Editor code={code} setCode={setCode} className="mb-6" />
 
           <button
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mb-10"
+            className="outline-none bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mb-10"
             onClick={updateFlow}
           >
             Run now

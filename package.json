@@ -22,6 +22,7 @@
     "graphiql": "^1.0.3",
     "graphql": "^14.0.2",
     "graphql-tag": "2.10.3",
+    "heroicons-react": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^3.0.0",
     "monaco-editor": "^0.20.0",
@@ -31,7 +32,9 @@
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-modal": "^3.11.2",
     "react-monaco-editor": "^0.36.0",
+    "react-tippy": "^1.4.0",
     "xstate": "^4.11.0"
   },
   "devDependencies": {
