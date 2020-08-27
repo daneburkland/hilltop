@@ -76,8 +76,8 @@ const UPDATE_FLOW_MUTATION = gql`
 `;
 
 const SAVE_SETTINGS = gql`
-  mutation updateFlow($repeatOptions: RepeatOptionsInput, $id: Int!) {
-    updateFlow(repeatOptions: $repeatOptions, id: $id) {
+  mutation updateFlowOptions($repeatOptions: RepeatOptionsInput, $id: Int!) {
+    updateFlowOptions(repeatOptions: $repeatOptions, id: $id) {
       id
       repeatOptions {
         every
@@ -115,17 +115,18 @@ const Flow = ({ children }) => {
     {
       variables: {
         id: parseInt(id),
+        code,
         repeatOptions: {
-          every: parseInt(flow?.repeatOptions.every),
+          every: parseInt(flow?.repeatOptions?.every),
         },
       },
-      onCompleted: ({ updateFlow }) => {
+      onCompleted: ({ updateFlowOptions }) => {
         setIsSettingsModalOpen(false);
         persistedFlow.current = {
           ...persistedFlow,
-          repeatOptions: updateFlow.repeatOptions,
+          repeatOptions: updateFlowOptions.repeatOptions,
         };
-        setFlow({ ...flow, repeatOptions: updateFlow.repeatOptions });
+        setFlow({ ...flow, repeatOptions: updateFlowOptions.repeatOptions });
       },
     }
   );
@@ -175,9 +176,9 @@ const Flow = ({ children }) => {
   ];
 
   const formattedEvery = flow
-    ? !!flow.repeatOptions.every
-      ? `${flow?.repeatOptions.every / 1000 / 60 / 60} ${
-          flow?.repeatOptions.every / 1000 / 60 / 60 > 1 ? "hours" : "hour"
+    ? !!flow.repeatOptions?.every
+      ? `${flow?.repeatOptions?.every / 1000 / 60 / 60} ${
+          flow?.repeatOptions?.every / 1000 / 60 / 60 > 1 ? "hours" : "hour"
         }`
       : "--"
     : "\xa0";
@@ -187,8 +188,6 @@ const Flow = ({ children }) => {
   const formattedLastExecutedAt = flow
     ? formatRelative(new Date(flow?.runs[0]?.createdAt || null), new Date())
     : "\xa0";
-
-  console.log(flow);
 
   return (
     <>
@@ -292,7 +291,7 @@ const Flow = ({ children }) => {
                   <select
                     className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state"
-                    value={flow?.repeatOptions.every}
+                    value={flow?.repeatOptions?.every}
                     onChange={({ target }) => {
                       const isRepeating = target.value !== "false";
                       setFlow({

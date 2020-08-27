@@ -25,7 +25,7 @@ const GET_FLOWS = gql`
 function FlowRow({ flow }) {
   const latestRun = flow.runs[0];
   const previewSrc =
-    flow.runs[0].screenshotUrls[0] || "https://via.placeholder.com/150";
+    flow.runs[0]?.screenshotUrls[0] || "https://via.placeholder.com/150";
   return (
     <Link key={flow.id} href={`/flow/${flow.id}`}>
       <div className="flex items-center p-3 cursor-pointer hover:bg-gray-200">
@@ -34,7 +34,7 @@ function FlowRow({ flow }) {
         <div className="w-5/12 text-gray-700 flex flex-col">
           <span className="text-lg">{`Created by ${flow.author.name}`}</span>
           <span className="text-gray-600">
-            {formatRelative(new Date(latestRun.createdAt), new Date())}
+            {formatRelative(new Date(latestRun?.createdAt || null), new Date())}
           </span>
         </div>
       </div>
